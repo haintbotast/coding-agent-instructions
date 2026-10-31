@@ -17,8 +17,14 @@ Wrote code before the test? **Delete it. Start over.** Don't keep it as "referen
 
 ## When
 
-Always: new features, bug fixes, refactoring, behavior changes.
-Exceptions (ask the human first): throwaway prototypes, generated code, config files.
+Always: new features, bug fixes, refactoring, behavior changes — any code with logic (business rules, permission checks, calculations, parsing, data transforms).
+Exceptions (no need to ask; **name the exception in the report**): config, docs, purely presentational UI, generated code, throwaway prototypes, one-off scripts. Infrastructure changes are verified by real behaviour (`ops-safety`), not unit tests.
+
+**Not "the whole test suite first".** A request like "write full-coverage unit tests before generating any logic" is met by this skill's vertical slices, not by a test-suite-up-front pass: all-tests-first verifies imagined behaviour (law 5 below). What the human can approve up front is the **list of seams and cases**, one line each — not the test bodies.
+
+**Coverage ratchet.** Where the project measures coverage, new lines stay ≥80%; never lower the threshold to make a change pass (`quality-floor`).
+
+**Small steps.** One cycle = one test + the code that turns it green + one commit, at most **50 added logic lines** (tests, docs, config, generated code, lockfiles, deletions and renames excluded). Measure with `quality-floor`'s `scripts/diff_budget.py`. Over budget → split; can't split → reason in the commit message.
 
 ## Red-Green-Refactor
 

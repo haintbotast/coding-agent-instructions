@@ -19,7 +19,7 @@ Vendor-neutral rules for AI coding agents. Precedence: user's explicit request >
 ## Done means verified
 
 - No claim of done, fixed or passing without fresh evidence from a command run now. Name every failed or skipped test. HTTP 3xx/4xx is not success; measure to the end state.
-- A bug fix starts with a test that reproduces it; done-criteria must be checkable by a command.
+- Logic: one failing test → code to green → commit, never all tests first; bug fix: reproducing test first. Commit ≤50 logic lines, PR ≤400 (`quality-floor`). Done-criteria: checkable by command.
 - Before done, try edge cases: empty/bad input, network failure, concurrency, scale, restart, permissions.
 - Merge is not done: merge → deploy to every relevant environment → verify by checksum → smoke test → report. Name any step not done.
 - Trust a guard only after seeing it go red.

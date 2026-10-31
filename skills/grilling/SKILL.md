@@ -1,6 +1,6 @@
 ---
 name: grilling
-description: Use when a plan, decision, or idea ALREADY EXISTS and needs stress-testing before acting, or when alignment on requirements feels shaky. If there is no design yet, use brainstorming-design first.
+description: Use when a plan, decision, or idea ALREADY EXISTS and needs stress-testing before acting, when alignment on requirements feels shaky, or when opening an ambiguous coding task (one bounded round). If there is no design yet, use brainstorming-design first.
 ---
 
 # Grilling
@@ -30,6 +30,10 @@ Format a round — separate consecutive questions with a `---` rule:
 Always give your recommended answer — the user reacts faster to a concrete proposal than a blank prompt. **Word each question so a plain "yes" accepts your recommendation.** Prefer multiple choice when the option space is small.
 
 **Finding facts is your job, never the user's.** A frontier question needing a fact from the environment (codebase, filesystem, tools) → dispatch a sub-agent to find it. Don't block on it: a running exploration is an unsettled prerequisite, so only the questions downstream of it wait — ask the rest of the frontier now. **Decisions belong to the user**: put each to them and wait.
+
+## Opening a coding task (bounded mode)
+
+Before code on a task that is ambiguous or expensive to redo, run ONE round only: **at most 5 questions**, each with your recommended answer, and only questions whose answer changes what gets built. Then grill your own plan without the user: write **at least 3 ways it could be wrong** and the command or check that would catch each. Ask at the start, never mid-way. User away, unattended run, or "just do it all" → take your recommendations, write them down as assumptions, proceed. Full relentless rounds above are for plans and decisions the user explicitly wants stress-tested.
 
 ## With docs (grill-with-docs mode)
 

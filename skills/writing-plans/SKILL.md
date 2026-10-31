@@ -17,7 +17,7 @@ Map which files get created/modified and each one's single responsibility. Clear
 
 ## Step Granularity
 
-Each step is ONE action with a checkable result: write failing test → run it, confirm it fails → minimal implementation → run tests, confirm pass → commit. A task = smallest unit with its own test cycle, ending in an independently testable deliverable. The reader writes idiomatic code once given the exact interface and the exact test; what they lack is context about this codebase, so the plan supplies it.
+Each step is ONE action with a checkable result: write failing test → run it, confirm it fails → minimal implementation → run tests, confirm pass → commit. A commit adds **≤50 logic lines** (tests, docs, config, generated code excluded; `quality-floor`'s `scripts/diff_budget.py`); a task that needs more is split further. A task = smallest unit with its own test cycle, ending in an independently testable deliverable. The reader writes idiomatic code once given the exact interface and the exact test; what they lack is context about this codebase, so the plan supplies it.
 
 ## Plan Header (mandatory)
 

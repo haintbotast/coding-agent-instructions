@@ -1,6 +1,6 @@
 ---
 name: quality-floor
-description: "Use when a project needs a written quality floor (CONSTRAINTS.md: lines a change may never cross) or to check that a diff did not weaken it: new suppression comments, skipped or deleted tests, stubs, secrets. Tightening is silent, loosening is loud. Not for correctness review (code-review-discipline) or writing tests (test-driven-development)."
+description: "Use when a project needs a written quality floor (CONSTRAINTS.md: lines a change may never cross) or to check that a diff did not weaken it: new suppression comments, skipped or deleted tests, stubs, secrets; also to measure whether a commit or PR is too big (small steps: ≤50 logic lines per commit, ≤400 per PR). Not for correctness review (code-review-discipline) or writing tests (test-driven-development)."
 ---
 
 # Quality floor
@@ -26,6 +26,18 @@ python3 <skill-dir>/scripts/floor_check.py --base origin/main --working # includ
 ```
 
 The script reads `git diff <base>...HEAD` and reports, with `file:line`: added suppression comments, added skip markers (`.skip(`, `xit(`, `@pytest.mark.skip`, `[Ignore]`), deleted test files, added stub markers, and secret-shaped strings. It does not judge style; that is `code-review-discipline`'s job.
+
+## Step budget (every commit, every PR)
+
+Small steps make review real: Google eng-practices call ~100 lines a reasonable change and ~1000 too large; SmartBear's Cisco study found defect finding drops past 200–400 lines reviewed at once. Budget: a commit adds **≤50 logic lines**, a PR changes **≤400 lines**.
+
+```bash
+python3 <skill-dir>/scripts/diff_budget.py                 # uncommitted step (incl. new untracked files) vs HEAD
+python3 <skill-dir>/scripts/diff_budget.py --base HEAD~1    # the commit just made
+python3 <skill-dir>/scripts/diff_budget.py --pr origin/main # whole branch, PR budget
+```
+
+Exit 1 = over. Not counted for a step: tests, docs, config, generated code, lockfiles, deletions, renames. It warns, it does not block: a migration, a mass rename or a new tool may exceed it — split, or give the reason in the commit message. Self-test: `bash <skill-dir>/scripts/test_diff_budget.sh`.
 
 ## The five loosening moves (say them by name in review)
 
